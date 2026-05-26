@@ -1,4 +1,4 @@
-from connect import db, cursor
+from conn import db, cursor
 
 #insert
 def tambah_divisi():
