@@ -17,7 +17,6 @@ def tambah_divisi(nama):
     print("Divisi berhasil ditambahkan")
 
 
-# SELECT
 def tampil_divisi():
     cursor = get_cursor()
 
@@ -29,7 +28,6 @@ def tampil_divisi():
     return hasil
 
 
-# UPDATE
 def update_divisi(id_divisi, nama_baru):
     cursor = get_cursor()
 
@@ -47,7 +45,6 @@ def update_divisi(id_divisi, nama_baru):
     print("Divisi berhasil diupdate")
 
 
-# DELETE
 def delete_divisi(id_divisi):
     cursor = get_cursor()
 
