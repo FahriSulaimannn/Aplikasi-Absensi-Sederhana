@@ -1,7 +1,9 @@
-from conn import db, cursor
+from conn import db, get_cursor
 
-#insert
+
+# insert
 def tambah_divisi():
+    cursor = get_cursor()
     nama = input("Masukkan nama divisi: ")
 
     query = """
@@ -16,8 +18,11 @@ def tambah_divisi():
 
     print("Divisi berhasil ditambahkan")
 
-#select
+
+# select
 def tampil_divisi():
+    cursor = get_cursor()
+
     query = "SELECT * FROM divisi"
 
     cursor.execute(query)
@@ -29,8 +34,11 @@ def tampil_divisi():
     for data in hasil:
         print(data)
 
-#update
+
+# update
 def update_divisi():
+    cursor = get_cursor()
+
     id_divisi = input("Masukkan ID divisi: ")
     nama = input("Masukkan nama divisi baru: ")
 
@@ -47,8 +55,11 @@ def update_divisi():
 
     print("Divisi berhasil diupdate")
 
-#delete
+
+# delete
 def delete_divisi():
+    cursor = get_cursor()
+
     id_divisi = input("Masukkan ID divisi yang ingin dihapus: ")
 
     query = "DELETE FROM divisi WHERE id=%s"

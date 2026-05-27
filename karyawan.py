@@ -1,6 +1,9 @@
-from conn import cursor, db
+from conn import db, get_cursor
+
 
 def tambah_karyawan(id_divisi, nama, no_telp, email, alamat):
+    cursor = get_cursor()
+
     sql = """INSERT INTO karyawan (id_divisi, nama, no_telp, email, alamat) 
             VALUES (%s, %s, %s, %s, %s)"""
     val = (id_divisi, nama, no_telp, email, alamat)
@@ -11,7 +14,10 @@ def tambah_karyawan(id_divisi, nama, no_telp, email, alamat):
     cursor.close()
     db.close()
 
+
 def tampil_karyawan():
+    cursor = get_cursor()
+
     sql = "SELECT * FROM karyawan"
     cursor.execute(sql)
     result = cursor.fetchall()
@@ -21,7 +27,10 @@ def tampil_karyawan():
     cursor.close()
     db.close()
 
+
 def update_karyawan(id_karyawan, id_divisi, nama, no_telp, email, alamat):
+    cursor = get_cursor()
+
     sql = """UPDATE karyawan SET id_divisi = %s, nama = %s, no_telp = %s, email = %s, alamat = %s 
             WHERE id_karyawan = %s OR nama = %s"""
     val = (id_divisi, nama, no_telp, email, alamat, id_karyawan, nama)
@@ -30,9 +39,11 @@ def update_karyawan(id_karyawan, id_divisi, nama, no_telp, email, alamat):
     print("Data berhasil diupdate")
 
     cursor.close()
-    db.close()
+
 
 def hapus_karyawan(id_karyawan, nama):
+    cursor = get_cursor()
+
     sql = """DELETE FROM karyawan WHERE id_karyawan = %s OR nama = %s"""
     val = (id_karyawan, nama)
     cursor.execute(sql, val)
@@ -40,4 +51,4 @@ def hapus_karyawan(id_karyawan, nama):
     print("Data berhasil dihapus")
 
     cursor.close()
-    db.close()
+
