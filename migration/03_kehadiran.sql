@@ -1,6 +1,6 @@
 CREATE TABLE kehadiran (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    id_karyawan INT NOT NULL,
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id_karyawan INT UNSIGNED NOT NULL,
     status ENUM('hadir', 'izin', 'sakit', 'alpha') NOT NULL,
     catatan VARCHAR(255),
     dibuat_pada DATE NOT NULL DEFAULT (CURRENT_DATE),
