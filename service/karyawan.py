@@ -1,54 +1,46 @@
 from conn import db, get_cursor
 
 
-def tambah_karyawan(id_divisi, nama, no_telp, email, alamat):
+def tambah_karyawan(id_divisi, nama, no_telp, email, alamat, posisi):
     cursor = get_cursor()
-
-    sql = """INSERT INTO karyawan (id_divisi, nama, no_telp, email, alamat) 
-            VALUES (%s, %s, %s, %s, %s)"""
-    val = (id_divisi, nama, no_telp, email, alamat)
-    cursor.execute(sql, val)
+    sql = """
+        INSERT INTO karyawan (id_divisi, nama, no_telp, email, alamat, posisi)
+        VALUES (%s, %s, %s, %s, %s, %s)
+    """
+    cursor.execute(sql, (id_divisi, nama, no_telp, email, alamat, posisi))
     db.commit()
-    print("Data berhasil ditambahkan")
-
     cursor.close()
-    db.close()
 
 
 def tampil_karyawan():
     cursor = get_cursor()
-
-    sql = "SELECT * FROM karyawan"
+    sql = """
+        SELECT k.id, k.nama, k.no_telp, k.email, k.alamat,
+               k.posisi, k.id_divisi, d.nama AS nama_divisi
+        FROM karyawan k
+        LEFT JOIN divisi d ON k.id_divisi = d.id
+        ORDER BY k.id
+    """
     cursor.execute(sql)
     result = cursor.fetchall()
-    for x in result:
-        print(x)
-
     cursor.close()
-    db.close()
+    return result
 
 
-def update_karyawan(id_karyawan, id_divisi, nama, no_telp, email, alamat):
+def update_karyawan(id_karyawan, id_divisi, nama, no_telp, email, alamat, posisi):
     cursor = get_cursor()
-
-    sql = """UPDATE karyawan SET id_divisi = %s, nama = %s, no_telp = %s, email = %s, alamat = %s 
-            WHERE id_karyawan = %s OR nama = %s"""
-    val = (id_divisi, nama, no_telp, email, alamat, id_karyawan, nama)
-    cursor.execute(sql, val)
+    sql = """
+        UPDATE karyawan
+        SET id_divisi=%s, nama=%s, no_telp=%s, email=%s, alamat=%s, posisi=%s
+        WHERE id=%s
+    """
+    cursor.execute(sql, (id_divisi, nama, no_telp, email, alamat, posisi, id_karyawan))
     db.commit()
-    print("Data berhasil diupdate")
-
     cursor.close()
 
 
-def hapus_karyawan(id_karyawan, nama):
+def hapus_karyawan(id_karyawan):
     cursor = get_cursor()
-
-    sql = """DELETE FROM karyawan WHERE id_karyawan = %s OR nama = %s"""
-    val = (id_karyawan, nama)
-    cursor.execute(sql, val)
+    cursor.execute("DELETE FROM karyawan WHERE id=%s", (id_karyawan,))
     db.commit()
-    print("Data berhasil dihapus")
-
     cursor.close()
-
