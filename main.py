@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from UI.halaman_karyawan import HalamanKaryawan
+from UI.halaman_divisi import HalamanDivisi
 
 class AplikasiAbsensi:
     def __init__(self):
@@ -34,7 +35,7 @@ class AplikasiAbsensi:
         menu_frame.pack(pady=40)
 
         ttk.Button(menu_frame, text="👥 Kelola Karyawan", command=lambda: self.tampil_halaman("Karyawan")).grid(row=0, column=0, padx=5, ipady=5)
-        ttk.Button(menu_frame, text="🏬 Kelola Divisi").grid(row=0, column=1, padx=5, ipady=5)
+        ttk.Button(menu_frame, text="🏬 Kelola Divisi", command=lambda: self.tampil_halaman("Divisi")).grid(row=0, column=1, padx=5, ipady=5)
         ttk.Button(menu_frame, text="📊 Laporan").grid(row=0, column=2, padx=5, ipady=5)
 
         self.frames["Dashboard"] = dash
@@ -42,11 +43,24 @@ class AplikasiAbsensi:
         # --- HALAMAN KARYAWAN ---
         self.frames["Karyawan"] = HalamanKaryawan(self.container, kembali_fn=lambda: self.tampil_halaman("Dashboard"))
 
+        # --- HALAMAN DIVISI ---
+        self.frames["Divisi"] = HalamanDivisi(self.container, kembali_fn=lambda: self.tampil_halaman("Dashboard"))
+
     def tampil_halaman(self, nama):
-        # Sembunyikan semua halaman, lalu tampilkan yang dipilih
+        # Sembunyikan semua halaman
         for frame in self.frames.values():
             frame.pack_forget()
-        self.frames[nama].pack(fill="both", expand=True)
+            
+        # --- TAMBAHAN BARU: REFRESH DATA ---
+        halaman_aktif = self.frames[nama]
+        
+        # Cek apakah halaman memiliki fungsi 'muat_data', jika ada maka jalankan!
+        if hasattr(halaman_aktif, 'muat_data'):
+            halaman_aktif.muat_data()
+        # -----------------------------------
+            
+        # Tampilkan halaman yang dipilih
+        halaman_aktif.pack(fill="both", expand=True)
 
 if __name__ == "__main__":
     AplikasiAbsensi()
