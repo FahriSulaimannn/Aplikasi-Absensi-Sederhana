@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 from UI.halaman_karyawan import HalamanKaryawan
 from UI.halaman_divisi import HalamanDivisi
+from UI.halaman_presensi import HalamanPresensi
+from UI.halaman_laporan import HalamanLaporan
 
 class AplikasiAbsensi:
     def __init__(self):
@@ -28,7 +30,7 @@ class AplikasiAbsensi:
         dash = ttk.Frame(self.container, padding=20)
         
         ttk.Label(dash, text="Dashboard Absensi", font=("Arial", 18, "bold")).pack(pady=20)
-        ttk.Button(dash, text="✅ Catat Presensi").pack(pady=10, ipadx=20, ipady=10)
+        ttk.Button(dash, text="✅ Catat Presensi", command=lambda: self.tampil_halaman("Presensi")).pack(pady=10, ipadx=20, ipady=10)
 
         # Menu Navigasi Tengah
         menu_frame = ttk.Frame(dash)
@@ -36,7 +38,7 @@ class AplikasiAbsensi:
 
         ttk.Button(menu_frame, text="👥 Kelola Karyawan", command=lambda: self.tampil_halaman("Karyawan")).grid(row=0, column=0, padx=5, ipady=5)
         ttk.Button(menu_frame, text="🏬 Kelola Divisi", command=lambda: self.tampil_halaman("Divisi")).grid(row=0, column=1, padx=5, ipady=5)
-        ttk.Button(menu_frame, text="📊 Laporan").grid(row=0, column=2, padx=5, ipady=5)
+        ttk.Button(menu_frame, text="📊 Laporan", command=lambda: self.tampil_halaman("Laporan")).grid(row=0, column=2, padx=5, ipady=5)
 
         self.frames["Dashboard"] = dash
 
@@ -45,6 +47,12 @@ class AplikasiAbsensi:
 
         # --- HALAMAN DIVISI ---
         self.frames["Divisi"] = HalamanDivisi(self.container, kembali_fn=lambda: self.tampil_halaman("Dashboard"))
+
+        # --- HALAMAN PRESENSI ---
+        self.frames["Presensi"] = HalamanPresensi(self.container, kembali_fn=lambda: self.tampil_halaman("Dashboard"))
+
+        # --- HALAMAN LAPORAN ---
+        self.frames["Laporan"] = HalamanLaporan(self.container, kembali_fn=lambda: self.tampil_halaman("Dashboard"))
 
     def tampil_halaman(self, nama):
         # Sembunyikan semua halaman
