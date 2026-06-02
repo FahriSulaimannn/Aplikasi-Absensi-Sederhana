@@ -32,10 +32,10 @@ class HalamanKaryawan(ttk.Frame):
         ttk.Button(aksi, text="🗑️ Hapus", command=self.hapus_data).pack(side="left", padx=2)
 
         # 2. Tabel Data
-        kolom = ("ID", "Nama", "Telepon", "Email", "Posisi", "Divisi")
+        kolom = ("ID", "Nama", "Alamat", "Telepon", "Email", "Posisi", "Divisi")
         self.tree = ttk.Treeview(self, columns=kolom, show="headings")
         
-        pengaturan_kolom = [("ID", 40), ("Nama", 150), ("Telepon", 100), ("Email", 150), ("Posisi", 90), ("Divisi", 100)]
+        pengaturan_kolom = [("ID", 40), ("Nama", 150), ("Alamat", 150), ("Telepon", 100), ("Email", 150), ("Posisi", 90), ("Divisi", 100)]
         for col, width in pengaturan_kolom:
             self.tree.heading(col, text=col)
             self.tree.column(col, width=width)
@@ -56,7 +56,7 @@ class HalamanKaryawan(ttk.Frame):
         # Ambil data karyawan ke tabel
         for r in tampil_karyawan():
             # r urutan: (id, nama, telp, email, alamat, posisi, id_div, nama_div)
-            self.tree.insert("", "end", iid=str(r[0]), values=(r[0], r[1], r[2], r[3], r[5].capitalize(), r[7] or "—"))
+            self.tree.insert("", "end", iid=str(r[0]), values=(r[0], r[1], r[4], r[2], r[3], r[5].capitalize(), r[7] or "—"))
 
     def get_id(self):
         sel = self.tree.selection()
