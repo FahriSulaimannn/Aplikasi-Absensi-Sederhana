@@ -12,4 +12,7 @@ CREATE TABLE kehadiran (
         REFERENCES karyawan(id)
         ON UPDATE CASCADE
         ON DELETE RESTRICT
+
+    CONSTRAINT uq_kehadiran_karyawan_hari
+        UNIQUE (id_karyawan, dibuat_pada)
 );
