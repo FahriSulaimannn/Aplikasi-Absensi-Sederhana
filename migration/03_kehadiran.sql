@@ -11,7 +11,7 @@ CREATE TABLE kehadiran (
         FOREIGN KEY (id_karyawan)
         REFERENCES karyawan(id)
         ON UPDATE CASCADE
-        ON DELETE RESTRICT
+        ON DELETE CASCADE
 
     CONSTRAINT uq_kehadiran_karyawan_hari
         UNIQUE (id_karyawan, dibuat_pada)
