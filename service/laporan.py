@@ -1,6 +1,5 @@
 from conn import db, get_cursor
 
-
 def laporan_perdivisi():
     q = """
     SELECT
@@ -18,14 +17,15 @@ def laporan_perdivisi():
         ON k.id = kh.id_karyawan
     WHERE kh.dibuat_pada = CURRENT_DATE()
     ORDER BY d.nama, k.nama, kh.dibuat_pada DESC
-
     """
-
-
-
-
-
-
+    # Bagian ini yang perlu ditambahkan agar query dieksekusi
+    cur = get_cursor()
+    cur.execute(q)
+    data = cur.fetchall()
+    cur.close()
+    
+    return data
+    
 def statistik_kehadiran():
     q = """
     SELECT
