@@ -1,7 +1,7 @@
 from conn import db, get_cursor
 
 
-def tambah_divisi(nama):
+def create_divisi(nama):
     cursor = get_cursor()
 
     query = """
@@ -17,7 +17,7 @@ def tambah_divisi(nama):
     print("Divisi berhasil ditambahkan")
 
 
-def tampil_divisi():
+def select_divisi():
     cursor = get_cursor()
 
     query = "SELECT * FROM divisi"

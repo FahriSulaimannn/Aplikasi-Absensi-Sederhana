@@ -3,7 +3,7 @@ CREATE TABLE karyawan (
     id_divisi INT UNSIGNED NOT NULL,
 
     nama VARCHAR(100) NOT NULL,
-    no_telp VARCHAR(20) NOT NULL,
+    no_telp INT NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     alamat VARCHAR(255) NOT NULL,
 

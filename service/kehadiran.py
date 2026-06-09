@@ -12,7 +12,8 @@ def select_all_kehadiran():
         kehadiran.status,
         kehadiran.jam_masuk,
         kehadiran.jam_keluar,
-        kehadiran.dibuat_pada
+        kehadiran.dibuat_pada,
+        kehadiran.id_karyawan
     FROM kehadiran
     JOIN karyawan
         ON kehadiran.id_karyawan = karyawan.id
@@ -21,11 +22,9 @@ def select_all_kehadiran():
 
     cursor.execute(q)
     result = cursor.fetchall()
-
-    for x in result:
-        print(x)
-
     cursor.close()
+    
+    return result 
 
 
 def select_kehadiran_by_id(id):
@@ -81,20 +80,18 @@ def select_kehadiran_by_id_karyawan(id):
 def create_kehadiran(id_karyawan, status, catatan=None):
     cursor = get_cursor()
 
-    q = """
-    INSERT INTO kehadiran (
-        id_karyawan,
-        status,
-        jam_masuk,
-        catatan
-    )
-    VALUES (%s, %s, NOW(), %s);
-    """
+    if status.lower() == 'hadir':
+        q = """
+        INSERT INTO kehadiran (id_karyawan, status, jam_masuk, catatan)
+        VALUES (%s, %s, CURRENT_TIMESTAMP, %s)
+        """
+    else:
+        q = """
+        INSERT INTO kehadiran (id_karyawan, status, jam_masuk, catatan)
+        VALUES (%s, %s, NULL, %s)
+        """
 
-    values = (id_karyawan, status, catatan)
-
-    cursor.execute(q, values)
-
+    cursor.execute(q, (id_karyawan, status, catatan))
     db.commit()
     cursor.close()
 
